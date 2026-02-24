@@ -64,9 +64,6 @@ function cellClickHandler (row, col) {
         alert(`Победил ${winnerInfo.winner}`);
         flagWin = true;
     }
-    /* Пользоваться методом для размещения символа в клетке так:
-        renderSymbolInCell(ZERO, row, col);
-     */
 }
 
 function checkWinner(board) {
@@ -121,9 +118,16 @@ function addResetListener () {
 }
 
 function resetClickHandler () {
-    console.log('reset!');
-}
+    field = [
+        [EMPTY, EMPTY, EMPTY],
+        [EMPTY, EMPTY, EMPTY],
+        [EMPTY, EMPTY, EMPTY]];
+    flagWin = false;
+    countMove = 0;
+    currentPlayer = CROSS;
 
+    renderGrid(3);
+}
 
 /* Test Function */
 /* Победа первого игрока */
