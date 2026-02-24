@@ -18,6 +18,7 @@ let field = [
 ];
 let currentPlayer = CROSS;
 let countMove = 0;
+let flagWin = false;
 
 function renderGrid (dimension) {
     container.innerHTML = '';
@@ -43,6 +44,9 @@ function cellClickHandler (row, col) {
     if (symbol !== EMPTY) {
         return;
     }
+    if (flagWin === true) {
+        return;
+    }
 
     field[row][col] = currentPlayer;
     renderSymbolInCell(currentPlayer, row, col);
@@ -51,12 +55,14 @@ function cellClickHandler (row, col) {
 
     if (countMove === 9) {
         alert('Победила дружба');
+        flagWin = true;
     }
 
     const winnerInfo = checkWinner(field);
     if (winnerInfo) {
         highlightCells(winnerInfo.cells, 'red');
         alert(`Победил ${winnerInfo.winner}`);
+        flagWin = true;
     }
     /* Пользоваться методом для размещения символа в клетке так:
         renderSymbolInCell(ZERO, row, col);
