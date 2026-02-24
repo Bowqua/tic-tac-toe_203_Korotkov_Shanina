@@ -11,6 +11,14 @@ function startGame () {
     renderGrid(3);
 }
 
+let field = [
+    [EMPTY, EMPTY, EMPTY],
+    [EMPTY, EMPTY, EMPTY],
+    [EMPTY, EMPTY, EMPTY]
+];
+let currentPlayer = CROSS;
+let countMove = 0;
+
 function renderGrid (dimension) {
     container.innerHTML = '';
 
@@ -27,14 +35,28 @@ function renderGrid (dimension) {
 }
 
 function cellClickHandler (row, col) {
-    // Пиши код тут
-    console.log(`Clicked on cell: ${row}, ${col}`);
 
+    console.log(`Clicked on cell: ${row}, ${col}`);
+    let item = findCell(row, col);
+    let symbol = item.textContent;
+
+    if (symbol !== EMPTY) {
+        return;
+    }
+
+    renderSymbolInCell(currentPlayer, row, col);
+    currentPlayer = currentPlayer === CROSS ? ZERO : CROSS;
+    countMove ++;
+
+    if (countMove === 9) {
+        alert('Победила дружба');
+    }
 
     /* Пользоваться методом для размещения символа в клетке так:
         renderSymbolInCell(ZERO, row, col);
      */
 }
+
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
     const targetCell = findCell(row, col);
