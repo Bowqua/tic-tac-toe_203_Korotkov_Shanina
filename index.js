@@ -44,6 +44,7 @@ function cellClickHandler (row, col) {
         return;
     }
 
+    field[row][col] = currentPlayer;
     renderSymbolInCell(currentPlayer, row, col);
     currentPlayer = currentPlayer === CROSS ? ZERO : CROSS;
     countMove ++;
@@ -52,6 +53,11 @@ function cellClickHandler (row, col) {
         alert('Победила дружба');
     }
 
+    const winnerInfo = checkWinner(field);
+    if (winnerInfo) {
+        highlightCells(winnerInfo.cells, 'red');
+        alert(`Победил ${winnerInfo.winner}`);
+    }
     /* Пользоваться методом для размещения символа в клетке так:
         renderSymbolInCell(ZERO, row, col);
      */
@@ -87,7 +93,7 @@ function checkWinner(board) {
 
 function highlightCells(cells, color) {
     for (const[row, column] of cells) {
-        renderSymbolInCell(board[row][column], row, column, color);
+        renderSymbolInCell(field[row][column], row, column, color);
     }
 }
 
