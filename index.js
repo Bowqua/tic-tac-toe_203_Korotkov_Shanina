@@ -57,6 +57,39 @@ function cellClickHandler (row, col) {
      */
 }
 
+function checkWinner(board) {
+    const lines = [];
+
+    for (let row = 0; row < 3; row++) {
+        lines.push([[row, 0], [row, 1], [row, 2]]);
+    }
+
+    for (let column = 0; column < 3; column++) {
+        lines.push([[0, column], [1, column], [2, column]]);
+    }
+
+    lines.push([[0, 0], [1, 1], [2, 2]]);
+    lines.push([[0, 2], [1, 1], [2, 0]]);
+
+    for (const line of lines) {
+        const [cell_first, cell_two, cell_three] = line;
+        const symbol_one = board[cell_first[0]][cell_first[1]];
+        const symbol_two = board[cell_two[0]][cell_two[1]];
+        const symbol_three = board[cell_three[0]][cell_three[1]];
+
+        if (symbol_one !== EMPTY && symbol_one === symbol_two && symbol_two === symbol_three) {
+            return { winner: symbol_one, cells: line };
+        }
+    }
+
+    return null;
+}
+
+function highlightCells(cells, color) {
+    for (const[row, column] of cells) {
+        renderSymbolInCell(board[row][column], row, column, color);
+    }
+}
 
 function renderSymbolInCell (symbol, row, col, color = '#333') {
     const targetCell = findCell(row, col);
